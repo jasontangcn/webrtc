@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Form, Input, Button} from "antd";
 
-class Login extends Component {
+export default class Login extends Component {
     submit(values) {
         this.props.login(values.userName, values.roomId);
     }
