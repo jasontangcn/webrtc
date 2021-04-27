@@ -3,7 +3,7 @@ import {Form, Input, Button} from "antd";
 
 export default class Login extends Component {
     submit(values) {
-        this.props.login(values.userName, values.roomId);
+        this.props.loginHandler(values.userName, values.roomId);
     }
 
     render() {

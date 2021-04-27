@@ -4,15 +4,16 @@ import VideoOffIcon from "mdi-react/VideoOffIcon";
 
 export default class LocalVideo extends Component {
     componentDidMount() {
-        let video = this.refes[this.props.id];
-        video.srcObject = this.props.stream;
-        video.onloadedmetadata = (e) => {
-            video.play();
+        //let video = this.refs[this.props.id];
+        this.video = React.createRef();
+        this.video.srcObject = this.props.stream;
+        this.video.onloadedmetadata = (e) => {
+            this.video.play();
         }
     }
 
     render() {
-        const locaVideoStyle = {
+        const localVideoStyle = {
             display: 'flex',
             justifyContent: "center",
             alignItems: 'center',
@@ -35,8 +36,8 @@ export default class LocalVideo extends Component {
         };
 
         return (
-            <div key={this.props.id} style={locaVideoStyle}>
-                <video ref={this.props.id}
+            <div key={this.props.id} style={localVideoStyle}>
+                <video ref={this.video}
                        id={this.props.id}
                        autoPlay
                        playsInline

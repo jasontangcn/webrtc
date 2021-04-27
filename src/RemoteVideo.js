@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-import VideoOffIcon from "mdi-react/VideoOffIcon";
 
 export default class RemoteVideo extends Component {
     componentDidMount() {
-        let video = this.refes[this.props.id];
-        video.srcObject = this.props.stream;
-        video.onloadedmetadata = (e) => {
-            video.play();
+        //let video = this.refes[this.props.id];
+        this.video = React.createRef();
+        this.video.srcObject = this.props.stream;
+        this.video.onloadedmetadata = (e) => {
+            this.video.play();
         }
     }
 
@@ -24,7 +24,7 @@ export default class RemoteVideo extends Component {
 
         return (
             <div key={this.props.id} style={remoteVideoStyle}>
-                <video ref={this.props.id}
+                <video ref={this.video}
                        id={this.props.id}
                        autoPlay
                        playsInline

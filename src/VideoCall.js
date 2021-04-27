@@ -139,8 +139,8 @@ export default class VideoCall extends events.EventEmitter {
             .then((stream) => {
                 this.localStream = stream;
                 this.createConnection(remoteUserId, mediaType, true, stream);
-                this.emit('localStream', stream);
-                this.emit('newCall', this.userId, this.sessionId);
+                this.emit('LocalStream', stream);
+                this.emit('NewCall', this.userId, this.sessionId);
             });
     }
 
@@ -222,12 +222,12 @@ export default class VideoCall extends events.EventEmitter {
 
         peerConnection.onaddstream = (event) => {
             console.log('onaddstream triggered.', event);
-            this.emit('addstream', event.stream);
+            this.emit('AddStream', event.stream);
         }
 
         peerConnection.onremovestream = (event) => {
             console.log("onremovestream triggered.");
-            this.emit('removestream', event.stream);
+            this.emit('RemoveStream', event.stream);
         }
 
         peerConnection.onaddstream(localStream);
@@ -241,20 +241,20 @@ export default class VideoCall extends events.EventEmitter {
     handleUpdateUserListMessage(message) {
         let data = message.data;
         console.log("users: " + JSON.stringify(data));
-        this.emit('updateUserList', data, this.userId);
+        this.emit('UpdateUserList', data, this.userId);
     }
 
     handleOfferMessage = (message) => {
         let data = message.data;
         let from = message.from;
         this.sessionId = data.sessionId;
-        this.emit('newCall', from, this.sessionId);
+        this.emit('NewCall', from, this.sessionId);
 
         let mediaType = 'video';
         this.getLocalStream(mediaType)
             .then((stream) => {
                 this.localStream = stream;
-                this.emit('localStream', stream);
+                this.emit('LocalStream', stream);
                 let peerConnection = this.createPeerConnection(from, mediaType, false, stream);
 
                 if(peerConnection && data.description) {
@@ -317,7 +317,7 @@ export default class VideoCall extends events.EventEmitter {
         if(peerConnection) {
             peerConnection.close();
             delete this.peerConnections[data];
-            this.emit('leaveRoom', data);
+            this.emit('LeaveRoom', data);
         }
 
         if(this.localStream) {
@@ -350,7 +350,7 @@ export default class VideoCall extends events.EventEmitter {
             this.localStream = null;
         }
 
-        this.emit('hangup', to, this.sessionId);
+        this.emit('Hangup', to, this.sessionId);
         //this.sessionId = "000-111";
     }
 
